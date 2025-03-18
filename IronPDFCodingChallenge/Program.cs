@@ -1,9 +1,8 @@
-﻿
-using IronPDFCodingChallenge;
+﻿using IronPDFCodingChallenge;
 
-Console.WriteLine("Hello, World!");
 
-Console.WriteLine(Phone.OldPhonePad("test"));
+
+Console.WriteLine(Phone.OldPhonePad("22#"));
 
 
 Console.ReadLine();
