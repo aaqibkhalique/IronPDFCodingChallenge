@@ -55,7 +55,8 @@ namespace IronPDFCodingChallenge
 
                 if (lastKey == c)
                 {
-                  
+                    if (stringBuilder.Length > 0)
+                        stringBuilder.Remove(stringBuilder.Length - 1, 1);
                     lastKey = c;
                     count++;
                 }
