@@ -9,14 +9,7 @@ namespace IronPDFCodingChallenge.Tests
     [TestFixture]
     public class PhoneTests
     {
-        [Test]
-        public void TestValidUserInssputs()
-        {
-            Assert.AreEqual("HELLO", Phone.OldPhonePad("4433555 555666096667775553#"));
-            Assert.AreEqual("WORLD", Phone.OldPhonePad("9675533 5556660966#"));
-            Assert.AreEqual("TEST", Phone.OldPhonePad("8337777 7777888#"));
-        }
-
+      
         [Test]
         public void TestValidUserInputsCorrects()
         {
@@ -46,7 +39,24 @@ namespace IronPDFCodingChallenge.Tests
             Assert.AreEqual(expected, result);
         }
 
+        [Test] 
+        public void CheckUserInputWithInvalidInput()
+        {
+            // Arrange
+            string input1 = "";
+            string input2 = "123";
+            string input3 = "**#";
 
+            // Act
+            string result1 = Phone.OldPhonePad(input1);
+            string result2 = Phone.OldPhonePad(input2);
+            string result3 = Phone.OldPhonePad(input3);
+
+            // Assert
+            Assert.AreEqual("", result1);
+            Assert.AreEqual("", result2);
+            Assert.AreEqual("", result3);
+        }
 
 
     }
