@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace IronPDFCodingChallenge
 {
+
+
     public class Phone
     {
-
-        public static String OldPhonePad(string input)
+        public static string OldPhonePad(string input)
         {
+            if (string.IsNullOrEmpty(input) || !input.EndsWith("#"))
+                return string.Empty;
+
+            StringBuilder stringBuilder = new StringBuilder();
             List<KeyPad> keys = new List<KeyPad>();
             keys.Add(new KeyPad { Number = "1", Alphabet = "&'(" });
             keys.Add(new KeyPad { Number = "2", Alphabet = "ABC" });
@@ -24,21 +29,52 @@ namespace IronPDFCodingChallenge
             keys.Add(new KeyPad { Number = "9", Alphabet = "WXYZ" });
             keys.Add(new KeyPad { Number = "0", Alphabet = " " });
 
-            StringBuilder stringBuilder = new StringBuilder();
+            char? lastKey = null;
+            int count = 0;
 
-            foreach (var item in input)
+            foreach (char c in input)
             {
-                if (item == '#')
-                {
+                if (c == '#')
                     break;
+
+                if (c == '*')
+                {
+                    if (stringBuilder.Length > 0)
+                        stringBuilder.Remove(stringBuilder.Length - 1, 1);
+                    lastKey = null;
+                    count = 0;
+                    continue;
+                }
+
+                if (c == ' ')
+                {
+                    lastKey = null;
+                    count = 0;
+                    continue;
+                }
+
+                if (lastKey == c)
+                {
+                  
+                    lastKey = c;
+                    count++;
+                }
+                else
+                {
+                  
+                    lastKey = c;
+                    count = 0;
+                }
+
+                KeyPad keyPad = keys.Find(k => k.Number == c.ToString());
+                if (keyPad != null)
+                {
+                    stringBuilder.Append(keyPad.Alphabet[count % keyPad.Alphabet.Length]);
                 }
             }
 
-
-
             return stringBuilder.ToString();
         }
-
     }
 
 
