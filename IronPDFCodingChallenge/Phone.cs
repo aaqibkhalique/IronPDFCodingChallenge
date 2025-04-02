@@ -26,32 +26,16 @@ namespace IronPDFCodingChallenge
                 if (c == '#')
                     break;
 
-                if (c == '*')
-                {
-                    if (stringBuilder.Length > 0)
-                        stringBuilder.Remove(stringBuilder.Length - 1, 1);
-                    lastKey = null;
-                    count = 0;
+                if (HandleSpecialKeys(c, stringBuilder, ref lastKey, ref count))
                     continue;
-                }
-
-                if (c == ' ')
-                {
-                    lastKey = null;
-                    count = 0;
-                    continue;
-                }
 
                 if (lastKey == c)
                 {
-                    if (stringBuilder.Length > 0)
-                        stringBuilder.Remove(stringBuilder.Length - 1, 1);
-                    lastKey = c;
+                    RemoveLastCharacter(stringBuilder);
                     count++;
                 }
                 else
                 {
-                  
                     lastKey = c;
                     count = 0;
                 }
@@ -65,8 +49,36 @@ namespace IronPDFCodingChallenge
 
             return stringBuilder.ToString();
         }
+
+
+
+        private static bool HandleSpecialKeys(char c, StringBuilder stringBuilder, ref char? lastKey, ref int count)
+        {
+            if (c == '*')
+            {
+                RemoveLastCharacter(stringBuilder);
+                lastKey = null;
+                count = 0;
+                return true;
+            }
+
+            if (c == ' ')
+            {
+                lastKey = null;
+                count = 0;
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void RemoveLastCharacter(StringBuilder stringBuilder)
+        {
+            if (stringBuilder.Length > 0)
+                stringBuilder.Remove(stringBuilder.Length - 1, 1);
+        }
+
+
     }
 
-
- 
 }
